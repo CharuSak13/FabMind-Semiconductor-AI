@@ -19,7 +19,10 @@ class FabMindDataLoader:
         df_sensors = pd.read_csv(self.secom_path, sep=" ", header=None)
         df_sensors = df_sensors.dropna(axis=1, how='all')
         
-        df_labels = pd.read_csv(self.labels_path, sep=" ", header=None)
+        df_labels = pd.read_csv(self.labels_path, sep=r"\s+", header=None, engine='python')
+        if df_labels.shape[1] == 3:
+            df_labels[1] = df_labels[1] + " " + df_labels[2]
+            df_labels = df_labels.drop(columns=[2])
         df_labels.columns = ['Pass_Fail', 'Timestamp']
         
         df = pd.concat([df_labels, df_sensors], axis=1)

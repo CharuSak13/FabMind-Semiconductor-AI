@@ -55,7 +55,7 @@ def generate_advanced_visuals():
     probs_used = []  # Model confidence
     
     # We will process 500 samples for the t-SNE plot, and pick 10 for the Gallery
-    sample_size = 500
+    sample_size = min(len(X_sensors), 500)
     
     with torch.no_grad():
         for i in range(sample_size):

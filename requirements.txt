@@ -7,3 +7,5 @@ xgboost
 shap
 streamlit
 opencv-python
+torch
+joblib

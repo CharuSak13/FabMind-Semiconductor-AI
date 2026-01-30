@@ -3,6 +3,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import torch
+import joblib
 import xgboost as xgb
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -54,7 +55,6 @@ def load_resources():
     cnn_model.eval()
     
     # XGBoost Model
-    import joblib
     xgb_model = joblib.load(f"{MODEL_DIR}/xgboost_yield.pkl")
     
     return X_sensors, y_secom, X_images, y_labels, sensor_model, cnn_model, xgb_model
@@ -84,7 +84,7 @@ if st.sidebar.button("Simulate New Wafer 🚀"):
         st.session_state['current_idx'] = idx
         st.session_state['wafer_type'] = "Pass"
         
-    st.experimental_rerun()
+    st.rerun()
 
 # Default State
 if 'current_idx' not in st.session_state:

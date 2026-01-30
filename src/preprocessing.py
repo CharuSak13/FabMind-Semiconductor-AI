@@ -30,9 +30,11 @@ def process_wafer_maps():
     # failureType is usually a list like [['Loc']] or []
     df['has_label'] = df['failureType'].apply(lambda x: len(x) > 0)
     
-    # FILTER: Keep ALL Failures + Sample of 5000 Good wafers
+    # FILTER: Keep ALL Failures + Sample of 5000 Good wafers (or all if less than 5000)
     df_failures = df[df['has_label'] == True]
-    df_good = df[df['has_label'] == False].sample(n=5000, random_state=42)
+    df_good_all = df[df['has_label'] == False]
+    n_sample = min(len(df_good_all), 5000)
+    df_good = df_good_all.sample(n=n_sample, random_state=42)
     
     # Combine
     df_subset = pd.concat([df_failures, df_good])
